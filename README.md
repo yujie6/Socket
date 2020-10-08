@@ -10,10 +10,13 @@ And we also implement a web client
 python web-client.py 127.0.0.1 12345 helloworld.html
 ```
 
+Here is a screenshot 
+![Screenshot](/home/yujie6/Documents/CS391/Socket/img/2020-10-08-195301_2560x1440_scrot.png)
 ## 2. Ping server
 In this project we write ping server.
-
-
+And here is the screenshot
+![ping server](/home/yujie6/Documents/CS391/Socket/img/2020-10-08-203814_2560x1440_scrot.png)
+And we also implement UDP-heartbeat.
 
 ## 3. SMTP client
 In this project, we take advantage of the service from `smtp.qq.com` 
@@ -34,3 +37,5 @@ we learned [MIME](https://tools.ietf.org/html/rfc2045#section-2.5)
 (Multipurpose Internet Mail Extensions). Especially how to use boundary to 
 send multiparty message (text + attachment + html).
 
+Here is the screenshot
+![](/home/yujie6/Documents/CS391/Socket/img/2020-10-08-201709_2560x1440_scrot.png)
