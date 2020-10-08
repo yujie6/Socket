@@ -38,4 +38,4 @@ we learned [MIME](https://tools.ietf.org/html/rfc2045#section-2.5)
 send multiparty message (text + attachment + html).
 
 Here is the screenshot
-![](/home/yujie6/Documents/CS391/Socket/img/2020-10-08-201709_2560x1440_scrot.png)
+![](./img/2020-10-08-201709_2560x1440_scrot.png)
