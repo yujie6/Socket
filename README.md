@@ -11,11 +11,11 @@ python web-client.py 127.0.0.1 12345 helloworld.html
 ```
 
 Here is a screenshot 
-![Screenshot](/home/yujie6/Documents/CS391/Socket/img/2020-10-08-195301_2560x1440_scrot.png)
+![Screenshot](./img/2020-10-08-195301_2560x1440_scrot.png)
 ## 2. Ping server
 In this project we write ping server.
 And here is the screenshot
-![ping server](/home/yujie6/Documents/CS391/Socket/img/2020-10-08-203814_2560x1440_scrot.png)
+![ping server](./img/2020-10-08-203814_2560x1440_scrot.png)
 And we also implement UDP-heartbeat.
 
 ## 3. SMTP client
