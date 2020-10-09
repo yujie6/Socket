@@ -1,18 +1,10 @@
 # import socket module
 from socket import *
+import threading
+import os.path
 
 
-serverSocket = socket(AF_INET, SOCK_STREAM)
-# Prepare a sever socket
-# Fill in start
-serverSocket.bind(('localhost', 12345))
-serverSocket.listen(1)
-# Fill in end
-while True:
-    # Establish the connection
-    print('Ready to serve...')
-    connectionSocket, addr = serverSocket.accept()
-    # print(connectionSocket, addr)
+def handle_client(connectionSocket):
     try:
         message = connectionSocket.recv(2048)  # Fill in start #Fill in end
         print("Get message: ", message.decode())
@@ -35,15 +27,31 @@ while True:
         connectionSocket.send("HTTP/1.1 404 Not Found\r\ncontent-type:text/html\r\n".encode())
         connectionSocket.send("\r\n".encode())
         connectionSocket.send('''
-        <html>
-            <head>
-            <title>404 Not Found</title>
-            <p>404 Not Found!</p>
-            </head>
-        </html>
-        '''.encode())
+            <html>
+                <head>
+                <title>404 Not Found</title>
+                <p>404 Not Found!</p>
+                </head>
+            </html>
+            '''.encode())
         connectionSocket.close()
-        # Send response message for file not found
+
+
+serverSocket = socket(AF_INET, SOCK_STREAM)
+# Prepare a sever socket
+# Fill in start
+serverSocket.bind(('localhost', 12345))
+serverSocket.listen(1)
+# Fill in end
+while True:
+    # Establish the connection
+    print('Ready to serve...')
+    connectionSocket, addr = serverSocket.accept()
+    client_handler = threading.Thread(target=handle_client, args=(connectionSocket,))
+    client_handler.start()
+    # print(connectionSocket, addr)
+
+    # Send response message for file not found
     # Close client socket
 # Fill in start
 serverSocket.close()
