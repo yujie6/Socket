@@ -3,39 +3,7 @@
 import random
 import time
 from socket import *
-import signal
-import errno
-import os
-from functools import wraps
-
-
-class TimeoutError(Exception):
-    pass
-
-
-def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
-    def decorator(func):
-        def _handle_timeout(signum, frame):
-            raise TimeoutError(error_message)
-
-        def wrapper(*args, **kwargs):
-            signal.signal(signal.SIGALRM, _handle_timeout)
-            signal.alarm(seconds)
-            try:
-                result = func(*args, **kwargs)
-            finally:
-                signal.alarm(0)
-            return result
-
-        return wraps(func)(wrapper)
-
-    return decorator
-
-
-@timeout(1, "Timeout!")
-def recvFromClient(serverSocket):
-    return serverSocket.recvfrom(1024)
-
+import select
 
 # Create a UDP socket
 # Notice the use of SOCK_DGRAM for UDP packets
@@ -46,11 +14,12 @@ last_time = 0.0
 last_client = ""
 while True:
     # Receive the client packet along with the address it is coming from
-    try:
-        message, address = recvFromClient(serverSocket)
+    ready = select.select([serverSocket], [], [], 2)
+    if ready[0]:
+        message, address = serverSocket.recvfrom(1024)
         print("receive from client: ", address, message)
-        t = message[7:]
-        send_time = time.mktime(time.strptime(t, "%a %b %d %H:%M:%S %Y"))
+        t = message[-24:]
+        send_time = time.mktime(time.strptime(t.decode(), "%a %b %d %H:%M:%S %Y"))
         last_time = send_time
         last_client = address
         message = message.upper()
@@ -58,8 +27,6 @@ while True:
         print("send complete")
         cur_time = time.time()
         # Capitalize the message from the client
-
-    except:
+    else:
         if last_client != "":
-            print("Client is dying")
-            print(last_client)
+            print("client is dying!", last_client)
